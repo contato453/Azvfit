@@ -19,7 +19,6 @@ import { Alert, AlertDescription } from '#/components/ui/alert'
 import { supabase } from '#/integrations/supabase/client'
 import { useAuth } from '#/lib/auth'
 import { fileSha256, saoPauloNow, todayISO } from '#/lib/programa'
-import { uploadEvidence } from '#/lib/evidence-upload'
 import type { Database } from '#/integrations/supabase/types'
 
 type Activity = Database['public']['Tables']['activities']['Row'] & {
@@ -37,7 +36,7 @@ export function RecordFormDialog({
   open: boolean
   onOpenChange: (open: boolean) => void
 }) {
-  const { user, profile } = useAuth()
+  const { user } = useAuth()
   const queryClient = useQueryClient()
 
   const now = saoPauloNow()
@@ -122,17 +121,18 @@ export function RecordFormDialog({
 
       if (insertError) throw insertError
 
-      // 2. Upload da evidência (se houver) direto para o Google Drive — nenhum
-      // arquivo fica no Supabase, só o ponteiro (drive_file_id/drive_view_url).
+      // 2. Upload da evidência (se houver) para o bucket privado.
       if (file) {
-        const drive = await uploadEvidence(file, user.id, profile?.full_name ?? user.email ?? user.id)
+        const path = `${user.id}/${editionId}/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`
+        const { error: uploadError } = await supabase.storage.from('evidences').upload(path, file)
+        if (uploadError) throw uploadError
+
         const hash = await fileSha256(file)
         const { error: evidenceError } = await supabase.from('evidences').insert({
           record_id: record.id,
           edition_id: editionId,
           user_id: user.id,
-          drive_file_id: drive.id,
-          drive_view_url: drive.webViewLink,
+          storage_path: path,
           file_name: file.name,
           mime_type: file.type,
           file_size: file.size,

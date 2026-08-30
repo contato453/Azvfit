@@ -719,8 +719,6 @@ export type Database = {
       evidences: {
         Row: {
           created_at: string
-          drive_file_id: string
-          drive_view_url: string | null
           edition_id: string
           file_hash: string | null
           file_name: string
@@ -729,13 +727,12 @@ export type Database = {
           mime_type: string | null
           mission_participation_id: string | null
           record_id: string | null
+          storage_path: string
           totalpass_checkin_id: string | null
           user_id: string
         }
         Insert: {
           created_at?: string
-          drive_file_id: string
-          drive_view_url?: string | null
           edition_id: string
           file_hash?: string | null
           file_name: string
@@ -744,13 +741,12 @@ export type Database = {
           mime_type?: string | null
           mission_participation_id?: string | null
           record_id?: string | null
+          storage_path: string
           totalpass_checkin_id?: string | null
           user_id: string
         }
         Update: {
           created_at?: string
-          drive_file_id?: string
-          drive_view_url?: string | null
           edition_id?: string
           file_hash?: string | null
           file_name?: string
@@ -759,6 +755,7 @@ export type Database = {
           mime_type?: string | null
           mission_participation_id?: string | null
           record_id?: string | null
+          storage_path?: string
           totalpass_checkin_id?: string | null
           user_id?: string
         }
@@ -1566,7 +1563,7 @@ export type Database = {
       expire_evidences: {
         Args: { _days?: number; _edition_id: string }
         Returns: {
-          drive_file_id: string
+          storage_path: string
         }[]
       }
       has_role: {

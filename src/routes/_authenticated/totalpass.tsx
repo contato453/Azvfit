@@ -19,7 +19,6 @@ import {
 } from '#/components/ui/drawer'
 import { supabase } from '#/integrations/supabase/client'
 import { useAuth } from '#/lib/auth'
-import { uploadEvidence } from '#/lib/evidence-upload'
 import { useCurrentEdition, STATUS_LABEL, STATUS_TONE, formatDateBR, todayISO } from '#/lib/programa'
 
 export const Route = createFileRoute('/_authenticated/totalpass')({
@@ -29,7 +28,7 @@ export const Route = createFileRoute('/_authenticated/totalpass')({
 })
 
 function TotalPassPage() {
-  const { user, profile } = useAuth()
+  const { user } = useAuth()
   const { data: edition } = useCurrentEdition()
   const queryClient = useQueryClient()
   const [open, setOpen] = useState(false)
@@ -83,13 +82,14 @@ function TotalPassPage() {
         .single()
       if (error) throw error
 
-      const drive = await uploadEvidence(file, user.id, profile?.full_name ?? user.email ?? user.id)
+      const path = `${user.id}/${edition.id}/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`
+      const { error: uploadError } = await supabase.storage.from('evidences').upload(path, file)
+      if (uploadError) throw uploadError
       const { error: evError } = await supabase.from('evidences').insert({
         totalpass_checkin_id: checkin.id,
         edition_id: edition.id,
         user_id: user.id,
-        drive_file_id: drive.id,
-        drive_view_url: drive.webViewLink,
+        storage_path: path,
         file_name: file.name,
         mime_type: file.type,
         file_size: file.size,
