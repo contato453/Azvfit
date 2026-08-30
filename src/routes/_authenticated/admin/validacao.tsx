@@ -52,11 +52,6 @@ function ValidacaoPage() {
   )
 }
 
-async function signedUrl(path: string) {
-  const { data } = await supabase.storage.from('evidences').createSignedUrl(path, 300)
-  return data?.signedUrl
-}
-
 function ActivityQueue({ editionId }: { editionId: string }) {
   const queryClient = useQueryClient()
   const [reviewing, setReviewing] = useState<{ id: string; action: string } | null>(null)
@@ -118,7 +113,7 @@ function ActivityQueue({ editionId }: { editionId: string }) {
             </div>
             {r.notes && <p className="text-sm text-muted-foreground">"{r.notes}"</p>}
             {r.evidences?.map((ev: any) => (
-              <EvidenceLink key={ev.id} path={ev.storage_path} name={ev.file_name} />
+              <EvidenceLink key={ev.id} url={ev.drive_view_url} name={ev.file_name} />
             ))}
             <div className="flex flex-wrap gap-2 pt-1">
               <Button size="sm" onClick={() => runAction(r.id, 'aprovar')} className="gap-1">
@@ -221,7 +216,7 @@ function MissionQueue({ editionId }: { editionId: string }) {
             </p>
             {p.notes && <p className="text-sm text-muted-foreground">"{p.notes}"</p>}
             {p.evidences?.map((ev: any) => (
-              <EvidenceLink key={ev.id} path={ev.storage_path} name={ev.file_name} />
+              <EvidenceLink key={ev.id} url={ev.drive_view_url} name={ev.file_name} />
             ))}
             <div className="flex gap-2 pt-1">
               <Button size="sm" onClick={() => runAction(p.id, 'aprovar')}>
@@ -297,7 +292,7 @@ function TotalPassQueue({ editionId }: { editionId: string }) {
             </p>
             <p className="text-xs text-muted-foreground">{formatDateBR(c.checkin_date)}</p>
             {c.evidences?.map((ev: any) => (
-              <EvidenceLink key={ev.id} path={ev.storage_path} name={ev.file_name} />
+              <EvidenceLink key={ev.id} url={ev.drive_view_url} name={ev.file_name} />
             ))}
             <div className="flex gap-2 pt-1">
               <Button size="sm" onClick={() => runAction(c.id, 'aprovar')}>
@@ -326,26 +321,16 @@ function TotalPassQueue({ editionId }: { editionId: string }) {
   )
 }
 
-function EvidenceLink({ path, name }: { path: string; name: string }) {
-  const [url, setUrl] = useState<string | null>(null)
+function EvidenceLink({ url, name }: { url: string | null; name: string }) {
   return (
     <Button
       variant="link"
       size="sm"
       className="h-auto justify-start p-0 text-xs"
-      onClick={async () => {
-        if (url) {
-          window.open(url, '_blank')
-          return
-        }
-        const u = await signedUrl(path)
-        if (u) {
-          setUrl(u)
-          window.open(u, '_blank')
-        }
-      }}
+      disabled={!url}
+      onClick={() => url && window.open(url, '_blank', 'noopener,noreferrer')}
     >
-      <ExternalLink className="mr-1 size-3" /> {name}
+      <ExternalLink className="mr-1 size-3" /> {name} (Drive)
     </Button>
   )
 }
