@@ -66,6 +66,7 @@
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^6.0.1",
     "eslint": "^9.20.0",
+    "nitro": "npm:nitro-nightly@^3.0.1-20260828-140537-5d83475c",
     "prettier": "^3.8.1",
     "typescript": "^6.0.2",
     "vite": "^8.0.0"
