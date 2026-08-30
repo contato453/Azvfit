@@ -19,6 +19,7 @@ import {
   Settings,
   History,
   Award,
+  UserPlus,
 } from 'lucide-react'
 
 export interface NavItem {
@@ -54,6 +55,7 @@ export const ADMIN_NAV: NavItem[] = [
   { label: 'Painel', to: '/admin', icon: Gauge },
   { label: 'Validação', to: '/admin/validacao', icon: CheckSquare },
   { label: 'Participantes', to: '/admin/participantes', icon: Users },
+  { label: 'Usuários', to: '/admin/usuarios', icon: UserPlus },
   { label: 'Missões', to: '/admin/missoes', icon: Target },
   { label: 'TotalPass', to: '/admin/totalpass', icon: Watch },
   { label: 'Eventos', to: '/admin/eventos', icon: CalendarDays },

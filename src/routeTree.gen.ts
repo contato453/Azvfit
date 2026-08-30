@@ -37,6 +37,7 @@ import { Route as AuthenticatedAdminPremiacoesRouteImport } from './routes/_auth
 import { Route as AuthenticatedAdminRankingRouteImport } from './routes/_authenticated/admin/ranking'
 import { Route as AuthenticatedAdminRelatoriosRouteImport } from './routes/_authenticated/admin/relatorios'
 import { Route as AuthenticatedAdminTotalpassRouteImport } from './routes/_authenticated/admin/totalpass'
+import { Route as AuthenticatedAdminUsuariosRouteImport } from './routes/_authenticated/admin/usuarios'
 import { Route as AuthenticatedAdminValidacaoRouteImport } from './routes/_authenticated/admin/validacao'
 
 const IndexRoute = IndexRouteImport.update({
@@ -191,6 +192,12 @@ const AuthenticatedAdminTotalpassRoute =
     path: '/totalpass',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
+const AuthenticatedAdminUsuariosRoute =
+  AuthenticatedAdminUsuariosRouteImport.update({
+    id: '/usuarios',
+    path: '/usuarios',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
 const AuthenticatedAdminValidacaoRoute =
   AuthenticatedAdminValidacaoRouteImport.update({
     id: '/validacao',
@@ -225,6 +232,7 @@ export interface FileRoutesByFullPath {
   '/admin/ranking': typeof AuthenticatedAdminRankingRoute
   '/admin/relatorios': typeof AuthenticatedAdminRelatoriosRoute
   '/admin/totalpass': typeof AuthenticatedAdminTotalpassRoute
+  '/admin/usuarios': typeof AuthenticatedAdminUsuariosRoute
   '/admin/validacao': typeof AuthenticatedAdminValidacaoRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
 }
@@ -254,6 +262,7 @@ export interface FileRoutesByTo {
   '/admin/ranking': typeof AuthenticatedAdminRankingRoute
   '/admin/relatorios': typeof AuthenticatedAdminRelatoriosRoute
   '/admin/totalpass': typeof AuthenticatedAdminTotalpassRoute
+  '/admin/usuarios': typeof AuthenticatedAdminUsuariosRoute
   '/admin/validacao': typeof AuthenticatedAdminValidacaoRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
 }
@@ -286,6 +295,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/ranking': typeof AuthenticatedAdminRankingRoute
   '/_authenticated/admin/relatorios': typeof AuthenticatedAdminRelatoriosRoute
   '/_authenticated/admin/totalpass': typeof AuthenticatedAdminTotalpassRoute
+  '/_authenticated/admin/usuarios': typeof AuthenticatedAdminUsuariosRoute
   '/_authenticated/admin/validacao': typeof AuthenticatedAdminValidacaoRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
 }
@@ -318,6 +328,7 @@ export interface FileRouteTypes {
     | '/admin/ranking'
     | '/admin/relatorios'
     | '/admin/totalpass'
+    | '/admin/usuarios'
     | '/admin/validacao'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
@@ -347,6 +358,7 @@ export interface FileRouteTypes {
     | '/admin/ranking'
     | '/admin/relatorios'
     | '/admin/totalpass'
+    | '/admin/usuarios'
     | '/admin/validacao'
     | '/admin'
   id:
@@ -378,6 +390,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/ranking'
     | '/_authenticated/admin/relatorios'
     | '/_authenticated/admin/totalpass'
+    | '/_authenticated/admin/usuarios'
     | '/_authenticated/admin/validacao'
     | '/_authenticated/admin/'
   fileRoutesById: FileRoutesById
@@ -588,6 +601,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminTotalpassRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
+    '/_authenticated/admin/usuarios': {
+      id: '/_authenticated/admin/usuarios'
+      path: '/usuarios'
+      fullPath: '/admin/usuarios'
+      preLoaderRoute: typeof AuthenticatedAdminUsuariosRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
     '/_authenticated/admin/validacao': {
       id: '/_authenticated/admin/validacao'
       path: '/validacao'
@@ -609,6 +629,7 @@ interface AuthenticatedAdminRouteRouteChildren {
   AuthenticatedAdminRankingRoute: typeof AuthenticatedAdminRankingRoute
   AuthenticatedAdminRelatoriosRoute: typeof AuthenticatedAdminRelatoriosRoute
   AuthenticatedAdminTotalpassRoute: typeof AuthenticatedAdminTotalpassRoute
+  AuthenticatedAdminUsuariosRoute: typeof AuthenticatedAdminUsuariosRoute
   AuthenticatedAdminValidacaoRoute: typeof AuthenticatedAdminValidacaoRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
@@ -625,6 +646,7 @@ const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren
     AuthenticatedAdminRankingRoute: AuthenticatedAdminRankingRoute,
     AuthenticatedAdminRelatoriosRoute: AuthenticatedAdminRelatoriosRoute,
     AuthenticatedAdminTotalpassRoute: AuthenticatedAdminTotalpassRoute,
+    AuthenticatedAdminUsuariosRoute: AuthenticatedAdminUsuariosRoute,
     AuthenticatedAdminValidacaoRoute: AuthenticatedAdminValidacaoRoute,
     AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
   }
