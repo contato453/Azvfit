@@ -68,6 +68,7 @@ export const EDITABLE_STATUSES: RecordStatus[] = ['rascunho', 'correcao_solicita
 export const COUNTING_STATUSES: RecordStatus[] = ['enviado', 'em_analise', 'correcao_solicitada', 'aprovado']
 
 export function useCurrentEdition() {
+  const { user } = useAuth()
   return useQuery({
     queryKey: ['edition', 'current'],
     queryFn: async () => {
@@ -79,6 +80,12 @@ export function useCurrentEdition() {
       if (error) throw error
       return data
     },
+    // editions só é legível por `authenticated` — sem esperar o AuthProvider
+    // resolver a sessão, essa é a primeira query que qualquer tela dispara
+    // (é a raiz de quase toda página autenticada) e podia sair antes da
+    // sessão estar restaurada, batendo com "permission denied" (anon não
+    // tem grant nenhum nas tabelas do AZVFIT).
+    enabled: !!user,
     staleTime: 5 * 60 * 1000,
   })
 }
