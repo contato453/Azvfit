@@ -81,7 +81,7 @@ export function RecordFormDialog({
     if (date < todayISO()) return 'Não é permitido registrar atividades de dias anteriores.'
     const activityAt = new Date(`${date}T${time}:00-03:00`)
     const diffHours = (Date.now() - activityAt.getTime()) / 36e5
-    if (diffHours > 5) return 'O registro deve ser feito em até 5 horas após a realização da atividade.'
+    if (diffHours > 24) return 'O registro deve ser feito em até 24 horas após a realização da atividade.'
     if (diffHours < 0) return 'O horário informado ainda não aconteceu.'
     return null
   }, [date, time])
