@@ -15,6 +15,8 @@ export default [
     },
   },
   {
-    ignores: ['eslint.config.js', 'prettier.config.js'],
+    // supabase/functions roda em Deno, fora do tsconfig do projeto Vite —
+    // mesma razão do exclude em tsconfig.json.
+    ignores: ['eslint.config.js', 'prettier.config.js', 'supabase/functions/**'],
   },
 ]
