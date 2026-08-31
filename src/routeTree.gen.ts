@@ -27,6 +27,7 @@ import { Route as AuthenticatedRankingRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedRegulamentoRouteImport } from './routes/_authenticated/regulamento'
 import { Route as AuthenticatedTotalpassRouteImport } from './routes/_authenticated/totalpass'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
+import { Route as AuthenticatedAdminAtividadesRouteImport } from './routes/_authenticated/admin/atividades'
 import { Route as AuthenticatedAdminAuditoriaRouteImport } from './routes/_authenticated/admin/auditoria'
 import { Route as AuthenticatedAdminConfiguracoesRouteImport } from './routes/_authenticated/admin/configuracoes'
 import { Route as AuthenticatedAdminEdicoesRouteImport } from './routes/_authenticated/admin/edicoes'
@@ -132,6 +133,12 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedAdminRouteRoute,
 } as any)
+const AuthenticatedAdminAtividadesRoute =
+  AuthenticatedAdminAtividadesRouteImport.update({
+    id: '/atividades',
+    path: '/atividades',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
 const AuthenticatedAdminAuditoriaRoute =
   AuthenticatedAdminAuditoriaRouteImport.update({
     id: '/auditoria',
@@ -222,6 +229,7 @@ export interface FileRoutesByFullPath {
   '/ranking': typeof AuthenticatedRankingRoute
   '/regulamento': typeof AuthenticatedRegulamentoRoute
   '/totalpass': typeof AuthenticatedTotalpassRoute
+  '/admin/atividades': typeof AuthenticatedAdminAtividadesRoute
   '/admin/auditoria': typeof AuthenticatedAdminAuditoriaRoute
   '/admin/configuracoes': typeof AuthenticatedAdminConfiguracoesRoute
   '/admin/edicoes': typeof AuthenticatedAdminEdicoesRoute
@@ -252,6 +260,7 @@ export interface FileRoutesByTo {
   '/ranking': typeof AuthenticatedRankingRoute
   '/regulamento': typeof AuthenticatedRegulamentoRoute
   '/totalpass': typeof AuthenticatedTotalpassRoute
+  '/admin/atividades': typeof AuthenticatedAdminAtividadesRoute
   '/admin/auditoria': typeof AuthenticatedAdminAuditoriaRoute
   '/admin/configuracoes': typeof AuthenticatedAdminConfiguracoesRoute
   '/admin/edicoes': typeof AuthenticatedAdminEdicoesRoute
@@ -285,6 +294,7 @@ export interface FileRoutesById {
   '/_authenticated/ranking': typeof AuthenticatedRankingRoute
   '/_authenticated/regulamento': typeof AuthenticatedRegulamentoRoute
   '/_authenticated/totalpass': typeof AuthenticatedTotalpassRoute
+  '/_authenticated/admin/atividades': typeof AuthenticatedAdminAtividadesRoute
   '/_authenticated/admin/auditoria': typeof AuthenticatedAdminAuditoriaRoute
   '/_authenticated/admin/configuracoes': typeof AuthenticatedAdminConfiguracoesRoute
   '/_authenticated/admin/edicoes': typeof AuthenticatedAdminEdicoesRoute
@@ -318,6 +328,7 @@ export interface FileRouteTypes {
     | '/ranking'
     | '/regulamento'
     | '/totalpass'
+    | '/admin/atividades'
     | '/admin/auditoria'
     | '/admin/configuracoes'
     | '/admin/edicoes'
@@ -348,6 +359,7 @@ export interface FileRouteTypes {
     | '/ranking'
     | '/regulamento'
     | '/totalpass'
+    | '/admin/atividades'
     | '/admin/auditoria'
     | '/admin/configuracoes'
     | '/admin/edicoes'
@@ -380,6 +392,7 @@ export interface FileRouteTypes {
     | '/_authenticated/ranking'
     | '/_authenticated/regulamento'
     | '/_authenticated/totalpass'
+    | '/_authenticated/admin/atividades'
     | '/_authenticated/admin/auditoria'
     | '/_authenticated/admin/configuracoes'
     | '/_authenticated/admin/edicoes'
@@ -531,6 +544,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
+    '/_authenticated/admin/atividades': {
+      id: '/_authenticated/admin/atividades'
+      path: '/atividades'
+      fullPath: '/admin/atividades'
+      preLoaderRoute: typeof AuthenticatedAdminAtividadesRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
     '/_authenticated/admin/auditoria': {
       id: '/_authenticated/admin/auditoria'
       path: '/auditoria'
@@ -619,6 +639,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedAdminRouteRouteChildren {
+  AuthenticatedAdminAtividadesRoute: typeof AuthenticatedAdminAtividadesRoute
   AuthenticatedAdminAuditoriaRoute: typeof AuthenticatedAdminAuditoriaRoute
   AuthenticatedAdminConfiguracoesRoute: typeof AuthenticatedAdminConfiguracoesRoute
   AuthenticatedAdminEdicoesRoute: typeof AuthenticatedAdminEdicoesRoute
@@ -636,6 +657,7 @@ interface AuthenticatedAdminRouteRouteChildren {
 
 const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren =
   {
+    AuthenticatedAdminAtividadesRoute: AuthenticatedAdminAtividadesRoute,
     AuthenticatedAdminAuditoriaRoute: AuthenticatedAdminAuditoriaRoute,
     AuthenticatedAdminConfiguracoesRoute: AuthenticatedAdminConfiguracoesRoute,
     AuthenticatedAdminEdicoesRoute: AuthenticatedAdminEdicoesRoute,

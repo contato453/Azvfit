@@ -54,6 +54,7 @@ export const COLABORADOR_NAV: NavItem[] = [
 export const ADMIN_NAV: NavItem[] = [
   { label: 'Painel', to: '/admin', icon: Gauge },
   { label: 'Validação', to: '/admin/validacao', icon: CheckSquare },
+  { label: 'Atividades', to: '/admin/atividades', icon: Dumbbell },
   { label: 'Participantes', to: '/admin/participantes', icon: Users },
   { label: 'Usuários', to: '/admin/usuarios', icon: UserPlus },
   { label: 'Missões', to: '/admin/missoes', icon: Target },
